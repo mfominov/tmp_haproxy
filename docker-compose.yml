@@ -1,0 +1,52 @@
+version: "2.1"
+
+services:
+  haproxy:
+    build: ./haproxy/
+    ports:
+     - '8080:8080'
+     - '1936:1936'
+    networks:
+      exness_net:
+
+  web_server_1:
+    build: ./nginx1/
+    networks:
+      exness_net:
+        ipv4_address: 172.16.238.10
+
+  web_server_2:
+    build: ./nginx2/
+    networks:
+      exness_net:
+        ipv4_address: 172.16.238.11
+
+  web_server_3:
+    build: ./nginx3/
+    networks:
+      exness_net:
+        ipv4_address: 172.16.238.12
+
+  web_server_4:
+    build: ./nginx4/
+    networks:
+      exness_net:
+        ipv4_address: 172.16.238.13
+
+#  haproxy2:
+#    build: ./haproxy2/
+#    ports:
+#     - '8081:8080'
+#     - '1937:1936'
+#    networks:
+#      exness_net:
+
+networks:
+  exness_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/26
+        gateway: 172.16.238.1
+
